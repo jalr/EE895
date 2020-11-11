@@ -10,7 +10,8 @@ bool EE895::begin(TwoWire &twoWirePort, HardwareSerial *debugSerial) {
   port->setClockStretchLimit(200000);
 #endif
   port->begin();
-  return true;
+
+  return getSensorName().compareTo(EE895_DEVICE_NAME) == 0;
 }
 
 uint16_t EE895::updateCRC(uint16_t data, uint16_t crc) {

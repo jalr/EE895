@@ -4,6 +4,8 @@
 #include "Arduino.h"
 #include <Wire.h>
 
+#define EE895_DEVICE_NAME "EE895"
+
 #define EE895_ADDRESS_MODBUS 0x5F
 #define EE895_FUNCTION_READ  0x03
 #define EE895_FUNCTION_WRITE 0x06
