@@ -141,3 +141,21 @@ float EE895::readRegisterFloat(uint16_t address) {
 
   return value.f;
 }
+
+String EE895::getSerialNumber() {
+  char* serialNumber = (char*)readRegister(EE895_REGISTER_NAME, 8);
+  if (serialNumber) {
+    return String(serialNumber);
+  } else {
+    return String("");
+  }
+}
+
+String EE895::getSensorName() {
+  char* sensorName = (char*)readRegister(EE895_REGISTER_SERIAL, 8);
+  if (sensorName) {
+    return String(sensorName);
+  } else {
+    return String("");
+  }
+}
