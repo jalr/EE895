@@ -11,13 +11,13 @@
 
 class EE895 {
   public:
-    EE895(void);
+    EE895();
 
-    bool begin(TwoWire &twoWirePort = Wire);
+    bool begin(TwoWire &twoWirePort = Wire, HardwareSerial *debugSerial = NULL);
 
-    bool send(uint8_t functionCode, uint16_t startingAdress, uint16_t noOfRegisters);
+    byte transmitFrame(uint8_t functionCode, uint16_t startingAdress, uint16_t noOfRegisters);
 
-    bool readRegister(uint16_t startingAdress, uint16_t noOfRegisters);
+    uint8_t* readRegister(uint16_t startingAdress, uint16_t noOfRegisters);
 
     float readRegisterFloat(uint16_t address);
 
@@ -27,6 +27,7 @@ class EE895 {
 
   private:
     TwoWire *port;
+    HardwareSerial *debug;
 };
 
 #endif /* !__EE895_ARDUINO_LIBARARY_H__ */
