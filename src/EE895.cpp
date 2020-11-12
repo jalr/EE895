@@ -3,14 +3,17 @@
 EE895::EE895(){
 }
 
-bool EE895::begin(TwoWire &twoWirePort, HardwareSerial *debugSerial) {
+bool EE895::begin(TwoWire &twoWirePort) {
   port = &twoWirePort;
-  debug = debugSerial;
 #if defined(ARDUINO_ARCH_ESP8266)
   port->setClockStretchLimit(200000);
 #endif
 
   return getSensorName().compareTo(EE895_DEVICE_NAME) == 0;
+}
+
+void EE895::setDebug(Stream &debugStream) {
+  debug = &debugStream;
 }
 
 uint16_t EE895::updateCRC(uint16_t data, uint16_t crc) {

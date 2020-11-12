@@ -24,7 +24,9 @@ class EE895 {
   public:
     EE895();
 
-    bool begin(TwoWire &twoWirePort = Wire, HardwareSerial *debugSerial = NULL);
+    bool begin(TwoWire &twoWirePort = Wire);
+
+    void setDebug(Stream &debugStream);
 
     byte transmitFrame(uint8_t functionCode, uint16_t startingAdress, uint16_t noOfRegisters);
 
@@ -49,7 +51,7 @@ class EE895 {
 
   private:
     TwoWire *port;
-    HardwareSerial *debug;
+    Stream *debug;
 };
 
 #endif /* !__EE895_ARDUINO_LIBARARY_H__ */

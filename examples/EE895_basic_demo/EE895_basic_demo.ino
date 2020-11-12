@@ -13,6 +13,8 @@ void setup() {
   Serial.println(SCL);
 
   Wire.begin();
+
+  sensor.setDebug(Serial); // this will print errors on serial port
 }
 
 void loop() {
