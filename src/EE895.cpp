@@ -10,7 +10,8 @@ bool EE895::begin(TwoWire &twoWirePort, HardwareSerial *debugSerial) {
   port->setClockStretchLimit(200000);
 #endif
   port->begin();
-  return true;
+
+  return getSensorName().compareTo(EE895_DEVICE_NAME) == 0;
 }
 
 uint16_t EE895::updateCRC(uint16_t data, uint16_t crc) {
@@ -140,4 +141,22 @@ float EE895::readRegisterFloat(uint16_t address) {
   value.b[2] = registerContents[3];
 
   return value.f;
+}
+
+String EE895::getSerialNumber() {
+  char* serialNumber = (char*)readRegister(EE895_REGISTER_NAME, 8);
+  if (serialNumber) {
+    return String(serialNumber);
+  } else {
+    return String("");
+  }
+}
+
+String EE895::getSensorName() {
+  char* sensorName = (char*)readRegister(EE895_REGISTER_SERIAL, 8);
+  if (sensorName) {
+    return String(sensorName);
+  } else {
+    return String("");
+  }
 }
