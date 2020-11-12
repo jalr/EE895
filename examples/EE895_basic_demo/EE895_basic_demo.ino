@@ -12,7 +12,7 @@ void setup() {
   Serial.print(", SCL is on Pin:");
   Serial.println(SCL);
 
-  sensor.begin();
+  Wire.begin();
 }
 
 void loop() {

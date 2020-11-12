@@ -9,7 +9,6 @@ bool EE895::begin(TwoWire &twoWirePort, HardwareSerial *debugSerial) {
 #if defined(ARDUINO_ARCH_ESP8266)
   port->setClockStretchLimit(200000);
 #endif
-  port->begin();
 
   return getSensorName().compareTo(EE895_DEVICE_NAME) == 0;
 }
