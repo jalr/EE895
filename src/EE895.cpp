@@ -170,3 +170,7 @@ uint8_t EE895::getFirmwareVersionMajor() {
 uint8_t EE895::getFirmwareVersionMinor() {
   return readRegister(EE895_REGISTER_FIRMWARE_VERSION, 1)[1];
 }
+
+uint8_t EE895::getMeasuringMode() {
+  return readRegister(EE895_REGISTER_MEASURING_MODE, 1)[0] & 1;
+}

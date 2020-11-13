@@ -13,6 +13,7 @@
 #define EE895_REGISTER_NAME              0x0000
 #define EE895_REGISTER_FIRMWARE_VERSION  0x0008
 #define EE895_REGISTER_SERIAL            0x0009
+#define EE895_REGISTER_MEASURING_MODE    0x01F8
 #define EE895_REGISTER_TEMPERATURE_DEG_C 0x03EA
 #define EE895_REGISTER_TEMPERATURE_DEG_F 0x03EC
 #define EE895_REGISTER_TEMPERATURE_K     0x03F0
@@ -40,6 +41,8 @@ class EE895 {
 
     uint8_t getFirmwareVersionMajor();
     uint8_t getFirmwareVersionMinor();
+
+    uint8_t getMeasuringMode();
 
     String getSerialNumber();
     String getSensorName();
