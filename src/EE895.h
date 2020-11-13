@@ -11,6 +11,7 @@
 #define EE895_FUNCTION_WRITE 0x06
 
 #define EE895_REGISTER_NAME              0x0000
+#define EE895_REGISTER_FIRMWARE_VERSION  0x0008
 #define EE895_REGISTER_SERIAL            0x0009
 #define EE895_REGISTER_TEMPERATURE_DEG_C 0x03EA
 #define EE895_REGISTER_TEMPERATURE_DEG_F 0x03EC
@@ -42,6 +43,9 @@ class EE895 {
     float getCO2Raw() { return readRegisterFloat(EE895_REGISTER_CO2_RAW); };
     float getPressureInmbar() { return readRegisterFloat(EE895_REGISTER_PRESSURE_MBAR); };
     float getPressureInpsi() { return readRegisterFloat(EE895_REGISTER_PRESSURE_PSI); };
+
+    uint8_t getFirmwareVersionMajor();
+    uint8_t getFirmwareVersionMinor();
 
     String getSerialNumber();
     String getSensorName();
