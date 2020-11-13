@@ -174,3 +174,12 @@ uint8_t EE895::getFirmwareVersionMinor() {
 uint8_t EE895::getMeasuringMode() {
   return readRegister(EE895_REGISTER_MEASURING_MODE, 1)[0] & 1;
 }
+
+bool EE895::isDataReady() {
+  return readRegister(EE895_REGISTER_MEASURING_STATUS, 1)[0] & 1;
+}
+
+bool EE895::isReadyForTrigger() {
+  return readRegister(EE895_REGISTER_MEASURING_STATUS, 1)[0] & (1<<1);
+}
+
