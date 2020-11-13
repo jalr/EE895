@@ -29,12 +29,6 @@ class EE895 {
 
     void setDebug(Stream &debugStream);
 
-    byte transmitFrame(uint8_t functionCode, uint16_t startingAdress, uint16_t noOfRegisters);
-
-    uint8_t* readRegister(uint16_t startingAdress, uint16_t noOfRegisters);
-
-    float readRegisterFloat(uint16_t address);
-
     float getCO2Average() { return readRegisterFloat(0x0424); };
 
     float getTemperatureInDegreeC() { return readRegisterFloat(EE895_REGISTER_TEMPERATURE_DEG_C); };
@@ -50,10 +44,12 @@ class EE895 {
     String getSerialNumber();
     String getSensorName();
 
+  private:
+    byte transmitFrame(uint8_t functionCode, uint16_t startingAdress, uint16_t noOfRegisters);
+    uint8_t* readRegister(uint16_t startingAdress, uint16_t noOfRegisters);
+    float readRegisterFloat(uint16_t address);
     uint16_t updateCRC(uint8_t data, uint16_t crc = 0xFFFF);
     uint16_t updateCRC(uint16_t data, uint16_t crc = 0xFFFF);
-
-  private:
     TwoWire *port;
     Stream *debug;
 };
