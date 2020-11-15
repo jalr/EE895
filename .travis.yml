@@ -1,6 +1,8 @@
 sudo: false
 language: ruby
 script:
+  - make
+  - git diff --exit-code
   - bundle install
   - bundle exec arduino_ci_remote.rb --skip-compilation
 cache: bundler
