@@ -15,3 +15,6 @@ getTemperatureInK	KEYWORD2
 isDataReady	KEYWORD2
 isReadyForTrigger	KEYWORD2
 setDebug	KEYWORD2
+setMeasuringModeContinous	KEYWORD2
+setMeasuringModeSingleShot	KEYWORD2
+triggerMeasurement	KEYWORD2
