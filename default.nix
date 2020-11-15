@@ -2,6 +2,7 @@
 with pkgs;
 mkShell {
   buildInputs = [
+    astyle
     python38
     python38Packages.setuptools
     python38Packages.virtualenv
