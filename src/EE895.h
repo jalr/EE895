@@ -31,14 +31,28 @@ class EE895 {
 
     void setDebug(Stream &debugStream);
 
-    float getCO2Average() { return readRegisterFloat(0x0424); };
+    float getCO2Average() {
+      return readRegisterFloat(0x0424);
+    };
 
-    float getTemperatureInDegreeC() { return readRegisterFloat(EE895_REGISTER_TEMPERATURE_DEG_C); };
-    float getTemperatureInDegreeF() { return readRegisterFloat(EE895_REGISTER_TEMPERATURE_DEG_F); };
-    float getTemperatureInK() { return readRegisterFloat(EE895_REGISTER_TEMPERATURE_K); };
-    float getCO2Raw() { return readRegisterFloat(EE895_REGISTER_CO2_RAW); };
-    float getPressureInmbar() { return readRegisterFloat(EE895_REGISTER_PRESSURE_MBAR); };
-    float getPressureInpsi() { return readRegisterFloat(EE895_REGISTER_PRESSURE_PSI); };
+    float getTemperatureInDegreeC() {
+      return readRegisterFloat(EE895_REGISTER_TEMPERATURE_DEG_C);
+    };
+    float getTemperatureInDegreeF() {
+      return readRegisterFloat(EE895_REGISTER_TEMPERATURE_DEG_F);
+    };
+    float getTemperatureInK() {
+      return readRegisterFloat(EE895_REGISTER_TEMPERATURE_K);
+    };
+    float getCO2Raw() {
+      return readRegisterFloat(EE895_REGISTER_CO2_RAW);
+    };
+    float getPressureInmbar() {
+      return readRegisterFloat(EE895_REGISTER_PRESSURE_MBAR);
+    };
+    float getPressureInpsi() {
+      return readRegisterFloat(EE895_REGISTER_PRESSURE_PSI);
+    };
 
     uint8_t getFirmwareVersionMajor();
     uint8_t getFirmwareVersionMinor();

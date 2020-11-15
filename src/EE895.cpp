@@ -1,13 +1,13 @@
 #include "EE895.h"
 
-EE895::EE895(){
+EE895::EE895() {
 }
 
 bool EE895::begin(TwoWire &twoWirePort) {
   port = &twoWirePort;
-#if defined(ARDUINO_ARCH_ESP8266)
+  #if defined(ARDUINO_ARCH_ESP8266)
   port->setClockStretchLimit(200000);
-#endif
+  #endif
 
   return getSensorName().compareTo(EE895_DEVICE_NAME) == 0;
 }
@@ -26,9 +26,9 @@ uint16_t EE895::updateCRC(uint8_t data, uint16_t crc) {
     if ((crc & 0x0001) != 0) {
       crc >>= 1;
       crc ^= 0xA001;
-    }
-    else
+    } else {
       crc >>= 1;
+    }
   }
   return crc;
 }
@@ -77,12 +77,12 @@ uint8_t* EE895::readRegister(uint16_t startingAdress, uint16_t noOfRegisters) {
     return NULL;
   }
 
-  const uint8_t receivedBytesCount = port->requestFrom((int)EE895_ADDRESS_MODBUS, (int)(4 + (2*noOfRegisters)), (int)true);
-  uint8_t *payload = new uint8_t[2*noOfRegisters];
+  const uint8_t receivedBytesCount = port->requestFrom((int)EE895_ADDRESS_MODBUS, (int)(4 + (2 * noOfRegisters)), (int)true);
+  uint8_t *payload = new uint8_t[2 * noOfRegisters];
   uint16_t crcCalculated = updateCRC((uint8_t)(EE895_ADDRESS_MODBUS));
   uint16_t crcReceived = 0;
 
-  for(uint8_t i = 0; i < receivedBytesCount; i++) {
+  for (uint8_t i = 0; i < receivedBytesCount; i++) {
     if (!port->available()) {
       if (debug != NULL) {
         debug->println(F("received less bytes than expected"));
@@ -97,22 +97,18 @@ uint8_t* EE895::readRegister(uint16_t startingAdress, uint16_t noOfRegisters) {
         debug->println(F("received unexpected function code"));
       }
       return NULL;
-    }
-    else if ((i == 1) && (receivedByte != (2*noOfRegisters))) {
+    } else if ((i == 1) && (receivedByte != (2 * noOfRegisters))) {
       if (debug != NULL) {
         debug->println(F("received unexpected byte count"));
       }
       return NULL;
-    }
-    else if (i < (2*noOfRegisters + 2)) {
+    } else if (i < (2 * noOfRegisters + 2)) {
       crcCalculated = updateCRC(receivedByte, crcCalculated);
-      payload[i-2] = receivedByte;
-    }
-    else if (i == (2*noOfRegisters + 2)) {
+      payload[i - 2] = receivedByte;
+    } else if (i == (2 * noOfRegisters + 2)) {
       crcReceived = receivedByte;
-    }
-    else if (i == (2*noOfRegisters + 3)) {
-      crcReceived |= receivedByte<<8;
+    } else if (i == (2 * noOfRegisters + 3)) {
+      crcReceived |= receivedByte << 8;
     }
   }
 
@@ -180,6 +176,6 @@ bool EE895::isDataReady() {
 }
 
 bool EE895::isReadyForTrigger() {
-  return readRegister(EE895_REGISTER_MEASURING_STATUS, 1)[0] & (1<<1);
+  return readRegister(EE895_REGISTER_MEASURING_STATUS, 1)[0] & (1 << 1);
 }
 
