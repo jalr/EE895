@@ -1,8 +1,10 @@
-#ifndef __EE895_ARDUINO_LIBARARY_H__
-#define __EE895_ARDUINO_LIBARARY_H__
+#ifndef EE895_H
+#define EE895_H
 
 #include "Arduino.h"
 #include <Wire.h>
+#include "ModbusTransmitFrame.h"
+#include "ModbusReceiveFrame.h"
 
 #define EE895_DEVICE_NAME "EE895"
 
@@ -66,13 +68,11 @@ class EE895 {
     bool isReadyForTrigger();
 
   private:
-    byte transmitFrame(uint8_t functionCode, uint16_t startingAdress, uint16_t noOfRegisters);
     uint8_t* readRegister(uint16_t startingAdress, uint16_t noOfRegisters);
     float readRegisterFloat(uint16_t address);
-    uint16_t updateCRC(uint8_t data, uint16_t crc = 0xFFFF);
-    uint16_t updateCRC(uint16_t data, uint16_t crc = 0xFFFF);
+    void debugEndTransmission(byte status);
     TwoWire *port;
     Stream *debug;
 };
 
-#endif /* !__EE895_ARDUINO_LIBARARY_H__ */
+#endif /* !EE895_H */
