@@ -40,3 +40,7 @@ If you removed, added or renamed methods, it is necessary to update the `keyword
 ```bash
 make keywords.txt
 ```
+
+## References
+* [EE895 Manual](https://www.epluse.com/fileadmin/data/product/ee895/BA_EE895.pdf)
+* [Modbus Application Protocol](https://modbus.org/docs/Modbus_Application_Protocol_V1_1b3.pdf)
