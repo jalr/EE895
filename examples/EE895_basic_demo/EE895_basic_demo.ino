@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <EE895.h>
+#include <EE895.h> // https://github.com/jalr/EE895
 
 EE895 sensor = EE895();
 
