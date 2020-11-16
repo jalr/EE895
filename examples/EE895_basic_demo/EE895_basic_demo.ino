@@ -14,6 +14,10 @@ void setup() {
 
   Wire.begin();
 
+  if (!sensor.begin()) {
+    Serial.println("Sensor not found, please check connections.");
+  }
+
   sensor.setDebug(Serial); // this will print errors on serial port
 }
 
