@@ -182,10 +182,10 @@ uint8_t EE895::getMeasuringMode() {
 }
 
 bool EE895::isDataReady() {
-  return readRegister(EE895_REGISTER_MEASURING_STATUS, 1)[0] & 1;
+  return readRegister(EE895_REGISTER_MEASURING_STATUS, 1)[1] & (1 << 0);
 }
 
 bool EE895::isReadyForTrigger() {
-  return readRegister(EE895_REGISTER_MEASURING_STATUS, 1)[0] & (1 << 1);
+  return readRegister(EE895_REGISTER_MEASURING_STATUS, 1)[1] & (1 << 1);
 }
 
