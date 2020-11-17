@@ -151,6 +151,16 @@ float EE895::readRegisterFloat(uint16_t address) {
   return value.f;
 }
 
+uint16_t EE895::readRegisterUInt(uint16_t address) {
+  uint8_t *reg = readRegister(address, 1);
+  return (reg[0] << 8) | reg[1];
+}
+
+int16_t EE895::readRegisterInt(uint16_t address) {
+  uint8_t *reg = readRegister(address, 1);
+  return (reg[0] << 8) | reg[1];
+}
+
 String EE895::getSerialNumber() {
   char* serialNumber = (char*)readRegister(EE895_REGISTER_NAME, 8);
   if (serialNumber) {
@@ -189,3 +199,26 @@ bool EE895::isReadyForTrigger() {
   return readRegister(EE895_REGISTER_MEASURING_STATUS, 1)[0] & (1 << 1);
 }
 
+uint16_t EE895::getCO2MeasuringInterval() {
+  return readRegisterUInt(EE895_REGISTER_PARAMETER_MEASURING_INTERVAL);
+};
+
+uint16_t EE895::getFilterCoefficient() {
+  return readRegisterUInt(EE895_REGISTER_PARAMETER_FILTER_COEFFICIENT);
+};
+
+int16_t EE895::getCO2CustomerOffset() {
+  return readRegisterInt(EE895_REGISTER_PARAMETER_CUSTOMER_OFFSET);
+}
+
+bool EE895::setCO2MeasuringInterval(uint16_t value) {
+  return writeSingleRegister(EE895_REGISTER_PARAMETER_MEASURING_INTERVAL, value);
+}
+
+bool EE895::setFilterCoefficient(uint16_t value) {
+  return writeSingleRegister(EE895_REGISTER_PARAMETER_FILTER_COEFFICIENT, value);
+}
+
+bool EE895::setCO2CustomerOffset(int16_t value) {
+  return writeSingleRegister(EE895_REGISTER_PARAMETER_CUSTOMER_OFFSET, value);
+}
