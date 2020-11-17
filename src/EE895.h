@@ -17,6 +17,7 @@
 #define EE895_REGISTER_SERIAL            0x0009
 #define EE895_REGISTER_MEASURING_MODE    0x01F8
 #define EE895_REGISTER_MEASURING_STATUS  0x01F9
+#define EE895_REGISTER_MEASURING_TRIGGER 0x01FA
 #define EE895_REGISTER_TEMPERATURE_DEG_C 0x03EA
 #define EE895_REGISTER_TEMPERATURE_DEG_F 0x03EC
 #define EE895_REGISTER_TEMPERATURE_K     0x03F0
@@ -60,6 +61,12 @@ class EE895 {
     uint8_t getFirmwareVersionMinor();
 
     uint8_t getMeasuringMode();
+    void setMeasuringModeSingleShot() {
+      writeSingleRegister(EE895_REGISTER_MEASURING_MODE, 1);
+    };
+    void setMeasuringModeContinous() {
+      writeSingleRegister(EE895_REGISTER_MEASURING_MODE, 0);
+    };
 
     String getSerialNumber();
     String getSensorName();
@@ -67,8 +74,13 @@ class EE895 {
     bool isDataReady();
     bool isReadyForTrigger();
 
+    bool triggerMeasurement() {
+      return writeSingleRegister(EE895_REGISTER_MEASURING_TRIGGER, 1);
+    }
+
   private:
     uint8_t* readRegister(uint16_t startingAdress, uint16_t noOfRegisters);
+    bool writeSingleRegister(uint16_t address, uint16_t value);
     float readRegisterFloat(uint16_t address);
     void debugEndTransmission(byte status);
     TwoWire *port;

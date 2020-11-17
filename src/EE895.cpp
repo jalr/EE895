@@ -43,6 +43,7 @@ uint8_t* EE895::readRegister(uint16_t startingAdress, uint16_t noOfRegisters) {
   tFrame.write(startingAdress);
   tFrame.write(noOfRegisters);
   uint8_t transmitFrameResult = tFrame.endTransmission();
+
   if (transmitFrameResult != 0) {
     debugEndTransmission(transmitFrameResult);
     return NULL;
@@ -78,6 +79,57 @@ uint8_t* EE895::readRegister(uint16_t startingAdress, uint16_t noOfRegisters) {
   }
 
   return payload;
+}
+
+bool EE895::writeSingleRegister(uint16_t address, uint16_t value) {
+  ModbusTransmitFrame tFrame = ModbusTransmitFrame(*port);
+  tFrame.beginTransmission(EE895_ADDRESS_MODBUS);
+  tFrame.write((uint8_t)EE895_FUNCTION_WRITE);
+  tFrame.write(address);
+  tFrame.write(value);
+  uint8_t transmitFrameResult = tFrame.endTransmission();
+
+  if (transmitFrameResult != 0) {
+    debugEndTransmission(transmitFrameResult);
+    return false;
+  }
+
+  ModbusReceiveFrame rFrame = ModbusReceiveFrame(*port);
+  rFrame.requestFrom((int)EE895_ADDRESS_MODBUS, (int)(7));
+
+  if (rFrame.readByte() != EE895_FUNCTION_WRITE) {
+    if (debug != NULL) {
+      debug->println(F("received unexpected function code"));
+    }
+    return false;
+  }
+
+  uint16_t readBackAddress = rFrame.readWord();
+
+  if (readBackAddress != address) {
+    if (debug != NULL) {
+      debug->println(F("Didn't read back the same address as transmitted"));
+    }
+    return false;
+  }
+
+  uint16_t readBackValue = rFrame.readWord();
+
+  if (readBackValue != value) {
+    if (debug != NULL) {
+      debug->println(F("Didn't read back the same value as transmitted"));
+    }
+    return false;
+  }
+
+  if (!rFrame.end()) {
+    if (debug != NULL) {
+      debug->println(F("Checksum error"));
+    }
+    return false;
+  }
+
+  return true;
 }
 
 float EE895::readRegisterFloat(uint16_t address) {
@@ -126,7 +178,7 @@ uint8_t EE895::getFirmwareVersionMinor() {
 }
 
 uint8_t EE895::getMeasuringMode() {
-  return readRegister(EE895_REGISTER_MEASURING_MODE, 1)[0] & 1;
+  return readRegister(EE895_REGISTER_MEASURING_MODE, 1)[1] & 1;
 }
 
 bool EE895::isDataReady() {
