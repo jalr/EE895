@@ -79,7 +79,7 @@ class EE895 {
     }
 
   private:
-    uint8_t* readRegister(uint16_t startingAdress, uint16_t noOfRegisters);
+    uint8_t* readRegister(uint16_t startingAddress, uint16_t noOfRegisters);
     bool writeSingleRegister(uint16_t address, uint16_t value);
     float readRegisterFloat(uint16_t address);
     void debugEndTransmission(byte status);

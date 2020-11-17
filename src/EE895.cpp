@@ -36,11 +36,11 @@ void EE895::debugEndTransmission(byte status) {
   }
 }
 
-uint8_t* EE895::readRegister(uint16_t startingAdress, uint16_t noOfRegisters) {
+uint8_t* EE895::readRegister(uint16_t startingAddress, uint16_t noOfRegisters) {
   ModbusTransmitFrame tFrame = ModbusTransmitFrame(*port);
   tFrame.beginTransmission(EE895_ADDRESS_MODBUS);
   tFrame.write((uint8_t)EE895_FUNCTION_READ);
-  tFrame.write(startingAdress);
+  tFrame.write(startingAddress);
   tFrame.write(noOfRegisters);
   uint8_t transmitFrameResult = tFrame.endTransmission();
 
