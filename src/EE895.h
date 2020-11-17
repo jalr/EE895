@@ -1,8 +1,10 @@
-#ifndef __EE895_ARDUINO_LIBARARY_H__
-#define __EE895_ARDUINO_LIBARARY_H__
+#ifndef EE895_H
+#define EE895_H
 
 #include "Arduino.h"
 #include <Wire.h>
+#include "ModbusTransmitFrame.h"
+#include "ModbusReceiveFrame.h"
 
 #define EE895_DEVICE_NAME "EE895"
 
@@ -11,7 +13,10 @@
 #define EE895_FUNCTION_WRITE 0x06
 
 #define EE895_REGISTER_NAME              0x0000
+#define EE895_REGISTER_FIRMWARE_VERSION  0x0008
 #define EE895_REGISTER_SERIAL            0x0009
+#define EE895_REGISTER_MEASURING_MODE    0x01F8
+#define EE895_REGISTER_MEASURING_STATUS  0x01F9
 #define EE895_REGISTER_TEMPERATURE_DEG_C 0x03EA
 #define EE895_REGISTER_TEMPERATURE_DEG_F 0x03EC
 #define EE895_REGISTER_TEMPERATURE_K     0x03F0
@@ -24,32 +29,50 @@ class EE895 {
   public:
     EE895();
 
-    bool begin(TwoWire &twoWirePort = Wire, HardwareSerial *debugSerial = NULL);
+    bool begin(TwoWire &twoWirePort = Wire);
 
-    byte transmitFrame(uint8_t functionCode, uint16_t startingAdress, uint16_t noOfRegisters);
+    void setDebug(Stream &debugStream);
 
-    uint8_t* readRegister(uint16_t startingAdress, uint16_t noOfRegisters);
+    float getCO2Average() {
+      return readRegisterFloat(0x0424);
+    };
 
-    float readRegisterFloat(uint16_t address);
+    float getTemperatureInDegreeC() {
+      return readRegisterFloat(EE895_REGISTER_TEMPERATURE_DEG_C);
+    };
+    float getTemperatureInDegreeF() {
+      return readRegisterFloat(EE895_REGISTER_TEMPERATURE_DEG_F);
+    };
+    float getTemperatureInK() {
+      return readRegisterFloat(EE895_REGISTER_TEMPERATURE_K);
+    };
+    float getCO2Raw() {
+      return readRegisterFloat(EE895_REGISTER_CO2_RAW);
+    };
+    float getPressureInmbar() {
+      return readRegisterFloat(EE895_REGISTER_PRESSURE_MBAR);
+    };
+    float getPressureInpsi() {
+      return readRegisterFloat(EE895_REGISTER_PRESSURE_PSI);
+    };
 
-    float getCO2Average() { return readRegisterFloat(0x0424); };
+    uint8_t getFirmwareVersionMajor();
+    uint8_t getFirmwareVersionMinor();
 
-    float getTemperatureInDegreeC() { return readRegisterFloat(EE895_REGISTER_TEMPERATURE_DEG_C); };
-    float getTemperatureInDegreeF() { return readRegisterFloat(EE895_REGISTER_TEMPERATURE_DEG_F); };
-    float getTemperatureInK() { return readRegisterFloat(EE895_REGISTER_TEMPERATURE_K); };
-    float getCO2Raw() { return readRegisterFloat(EE895_REGISTER_CO2_RAW); };
-    float getPressureInmbar() { return readRegisterFloat(EE895_REGISTER_PRESSURE_MBAR); };
-    float getPressureInpsi() { return readRegisterFloat(EE895_REGISTER_PRESSURE_PSI); };
+    uint8_t getMeasuringMode();
 
     String getSerialNumber();
     String getSensorName();
 
-    uint16_t updateCRC(uint8_t data, uint16_t crc = 0xFFFF);
-    uint16_t updateCRC(uint16_t data, uint16_t crc = 0xFFFF);
+    bool isDataReady();
+    bool isReadyForTrigger();
 
   private:
+    uint8_t* readRegister(uint16_t startingAdress, uint16_t noOfRegisters);
+    float readRegisterFloat(uint16_t address);
+    void debugEndTransmission(byte status);
     TwoWire *port;
-    HardwareSerial *debug;
+    Stream *debug;
 };
 
-#endif /* !__EE895_ARDUINO_LIBARARY_H__ */
+#endif /* !EE895_H */

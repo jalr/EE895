@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <EE895.h>
+#include <EE895.h> // https://github.com/jalr/EE895
 
 EE895 sensor = EE895();
 
@@ -12,7 +12,13 @@ void setup() {
   Serial.print(", SCL is on Pin:");
   Serial.println(SCL);
 
-  sensor.begin();
+  Wire.begin();
+
+  if (!sensor.begin()) {
+    Serial.println("Sensor not found, please check connections.");
+  }
+
+  sensor.setDebug(Serial); // this will print errors on serial port
 }
 
 void loop() {

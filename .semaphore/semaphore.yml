@@ -1,0 +1,23 @@
+version: v1.0
+name: Initial Pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Tests
+    task:
+      jobs:
+        - name: Linting
+          commands:
+            - make
+            - git diff --exit-code
+        - name: Compiling
+          commands:
+            - bundle exec arduino_ci_remote.rb --skip-unittests
+      prologue:
+        commands:
+          - sudo pip install arduinokeywords
+          - sudo apt-get -y install astyle
+          - checkout
+          - bundle install
