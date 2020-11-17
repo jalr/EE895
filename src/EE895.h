@@ -61,11 +61,11 @@ class EE895 {
     uint8_t getFirmwareVersionMinor();
 
     uint8_t getMeasuringMode();
-    void setMeasuringModeSingleShot() {
-      writeSingleRegister(EE895_REGISTER_MEASURING_MODE, 1);
+    bool setMeasuringModeSingleShot() {
+      return writeSingleRegister(EE895_REGISTER_MEASURING_MODE, 1);
     };
-    void setMeasuringModeContinous() {
-      writeSingleRegister(EE895_REGISTER_MEASURING_MODE, 0);
+    bool setMeasuringModeContinous() {
+      return writeSingleRegister(EE895_REGISTER_MEASURING_MODE, 0);
     };
 
     String getSerialNumber();
