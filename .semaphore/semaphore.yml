@@ -18,6 +18,6 @@ blocks:
       prologue:
         commands:
           - sudo pip install arduinokeywords
-          - sudo apt-get -y install astyle
+          - install-package astyle
           - checkout
           - bundle install
