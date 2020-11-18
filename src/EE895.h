@@ -63,11 +63,11 @@ class EE895 {
     uint8_t getFirmwareVersionMinor();
 
     uint8_t getMeasuringMode();
-    void setMeasuringModeSingleShot() {
-      writeSingleRegister(EE895_REGISTER_MEASURING_MODE, 1);
+    bool setMeasuringModeSingleShot() {
+      return writeSingleRegister(EE895_REGISTER_MEASURING_MODE, 1);
     };
-    void setMeasuringModeContinous() {
-      writeSingleRegister(EE895_REGISTER_MEASURING_MODE, 0);
+    bool setMeasuringModeContinous() {
+      return writeSingleRegister(EE895_REGISTER_MEASURING_MODE, 0);
     };
 
     String getSerialNumber();
@@ -90,7 +90,7 @@ class EE895 {
 
 
   private:
-    uint8_t* readRegister(uint16_t startingAdress, uint16_t noOfRegisters);
+    uint8_t* readRegister(uint16_t startingAddress, uint16_t noOfRegisters);
     bool writeSingleRegister(uint16_t address, uint16_t value);
     float readRegisterFloat(uint16_t address);
     uint16_t readRegisterUInt(uint16_t address);
