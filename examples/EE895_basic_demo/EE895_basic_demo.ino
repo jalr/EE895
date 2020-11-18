@@ -23,14 +23,43 @@ void setup() {
 
 void loop() {
   float co2Average = sensor.getCO2Average();
-
   Serial.print("CO2 average: ");
+  Serial.print(co2Average);
+  Serial.println(" ppm");
+
+  //printImperialValues();
+
+  printMetricValues();
 
   printDetailedStatus();
 
   Serial.println();
 
   delay(5000);
+}
+
+void printImperialValues() {
+  float temperature = sensor.getTemperatureInDegreeF();
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.println(" °F");
+
+  float pressure = sensor.getPressureInpsi();
+  Serial.print("Pressure: ");
+  Serial.print(pressure);
+  Serial.println(" psi");
+}
+
+void printMetricValues() {
+  float temperature = sensor.getTemperatureInDegreeC();
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.println(" °C");
+
+  float pressure = sensor.getPressureInmbar();
+  Serial.print("Pressure: ");
+  Serial.print(pressure);
+  Serial.println(" mbar");
 }
 
 void printDetailedStatus() {
