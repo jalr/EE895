@@ -25,6 +25,29 @@ void loop() {
   float co2Average = sensor.getCO2Average();
 
   Serial.print("CO2 average: ");
-  Serial.println(co2Average);
+
+  printDetailedStatus();
+
+  Serial.println();
+
   delay(5000);
+}
+
+void printDetailedStatus() {
+  uint16_t status = sensor.getDetailedStatus();
+  if (status & EE895::DetailedStatus::CO2TooHigh) {
+    Serial.println("CO 2 measurement too high");
+  } else if (status & EE895::DetailedStatus::CO2TooLow) {
+    Serial.println("CO 2 measurement too low");
+  }
+  if (status & EE895::DetailedStatus::TemperatureTooHigh) {
+    Serial.println("T measurement too high");
+  } else if (status & EE895::DetailedStatus::TemperatureTooLow) {
+    Serial.println("T measurement too low");
+  }
+  if (status & EE895::DetailedStatus::PressureTooHigh) {
+    Serial.println("p measurement too high");
+  } else if (status & EE895::DetailedStatus::PressureTooLow) {
+    Serial.println("p measurement too low");
+  }
 }

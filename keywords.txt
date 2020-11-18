@@ -4,6 +4,7 @@ getCO2Average	KEYWORD2
 getCO2CustomerOffset	KEYWORD2
 getCO2MeasuringInterval	KEYWORD2
 getCO2Raw	KEYWORD2
+getDetailedStatus	KEYWORD2
 getFilterCoefficient	KEYWORD2
 getFirmwareVersionMajor	KEYWORD2
 getFirmwareVersionMinor	KEYWORD2
