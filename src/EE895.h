@@ -18,6 +18,7 @@
 #define EE895_REGISTER_MEASURING_MODE               0x01F8
 #define EE895_REGISTER_MEASURING_STATUS             0x01F9
 #define EE895_REGISTER_MEASURING_TRIGGER            0x01FA
+#define EE895_REGISTER_DETAILED_STATUS              0x0258
 #define EE895_REGISTER_TEMPERATURE_DEG_C            0x03EA
 #define EE895_REGISTER_TEMPERATURE_DEG_F            0x03EC
 #define EE895_REGISTER_TEMPERATURE_K                0x03F0
@@ -30,6 +31,15 @@
 
 class EE895 {
   public:
+    typedef enum {
+      CO2TooHigh = (1 << 0),
+      CO2TooLow = (1 << 1),
+      TemperatureTooHigh = (1 << 2),
+      TemperatureTooLow = (1 << 3),
+      PressureTooHigh = (1 << 6),
+      PressureTooLow = (1 << 7)
+    } DetailedStatus;
+
     EE895();
 
     bool begin(TwoWire &twoWirePort = Wire);
@@ -79,6 +89,8 @@ class EE895 {
     bool triggerMeasurement() {
       return writeSingleRegister(EE895_REGISTER_MEASURING_TRIGGER, 1);
     }
+
+    uint16_t getDetailedStatus();
 
     uint16_t getCO2MeasuringInterval();
     uint16_t getFilterCoefficient();

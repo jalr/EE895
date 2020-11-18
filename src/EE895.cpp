@@ -199,6 +199,10 @@ bool EE895::isReadyForTrigger() {
   return readRegister(EE895_REGISTER_MEASURING_STATUS, 1)[1] & (1 << 1);
 }
 
+uint16_t EE895::getDetailedStatus() {
+  return readRegisterUInt(EE895_REGISTER_DETAILED_STATUS);
+}
+
 uint16_t EE895::getCO2MeasuringInterval() {
   return readRegisterUInt(EE895_REGISTER_PARAMETER_MEASURING_INTERVAL);
 };
