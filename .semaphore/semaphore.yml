@@ -17,7 +17,9 @@ blocks:
             - git diff --exit-code
         - name: Compiling
           commands:
+            - cache restore arduino_ci_ide
             - bundle exec arduino_ci_remote.rb --skip-unittests
+            - cache store arduino_ci_ide $HOME/arduino_ci_ide
       prologue:
         commands:
           - install-package astyle
