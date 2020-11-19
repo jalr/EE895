@@ -80,8 +80,8 @@ class EE895 {
       return writeSingleRegister(EE895_REGISTER_MEASURING_MODE, 0);
     };
 
-    String getSerialNumber();
-    String getSensorName();
+    char* getSerialNumber();
+    char* getSensorName();
 
     bool isDataReady();
     bool isReadyForTrigger();
