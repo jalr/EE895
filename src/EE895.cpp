@@ -9,7 +9,7 @@ bool EE895::begin(TwoWire &twoWirePort) {
   port->setClockStretchLimit(200000);
   #endif
 
-  return getSensorName().compareTo(EE895_DEVICE_NAME) == 0;
+  return strcmp(getSensorName(), EE895_DEVICE_NAME) == 0;
 }
 
 void EE895::setDebug(Stream &debugStream) {
@@ -161,22 +161,12 @@ int16_t EE895::readRegisterInt(uint16_t address) {
   return (reg[0] << 8) | reg[1];
 }
 
-String EE895::getSerialNumber() {
-  char* serialNumber = (char*)readRegister(EE895_REGISTER_NAME, 8);
-  if (serialNumber) {
-    return String(serialNumber);
-  } else {
-    return String("");
-  }
+char* EE895::getSerialNumber() {
+  return (char*)readRegister(EE895_REGISTER_NAME, 8);
 }
 
-String EE895::getSensorName() {
-  char* sensorName = (char*)readRegister(EE895_REGISTER_SERIAL, 8);
-  if (sensorName) {
-    return String(sensorName);
-  } else {
-    return String("");
-  }
+char* EE895::getSensorName() {
+  return (char*)readRegister(EE895_REGISTER_SERIAL, 8);
 }
 
 uint8_t EE895::getFirmwareVersionMajor() {
