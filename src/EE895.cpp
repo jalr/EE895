@@ -139,6 +139,7 @@ float EE895::readRegisterFloat(uint16_t address) {
   } value;
 
   uint8_t *registerContents = readRegister(address, 2);
+
   if (registerContents == NULL) {
     return NAN;
   }
@@ -147,6 +148,8 @@ float EE895::readRegisterFloat(uint16_t address) {
   value.b[0] = registerContents[1];
   value.b[3] = registerContents[2];
   value.b[2] = registerContents[3];
+
+  delete[] registerContents;
 
   return value.f;
 }
