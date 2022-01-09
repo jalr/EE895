@@ -6,6 +6,7 @@ mkShell {
     python38
     python38Packages.setuptools
     python38Packages.virtualenv
+    zip
   ];
   shellHook = ''
     virtualenv --no-setuptools venv

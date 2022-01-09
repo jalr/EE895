@@ -1,4 +1,6 @@
 *.orig
+*.tar.gz
+*.zip
 /.direnv
 /.venv
 /vendor
