@@ -1,5 +1,5 @@
 # EE895
-[![Build Status](https://jalr.semaphoreci.com/badges/EE895.svg?style=shields)](https://jalr.semaphoreci.com/projects/EE895)
+[![Build Status](https://jalr.semaphoreci.com/badges/EE895/branches/main.svg?style=shields)](https://jalr.semaphoreci.com/projects/EE895)
 
 An Arduino library for the [EE895 CO2 sensor](https://www.epluse.com/en/products/co2-measurement/co2-sensor/ee895/) manufactured by E+E Elektronik Ges.m.b.H.
 
