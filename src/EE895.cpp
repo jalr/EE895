@@ -9,7 +9,11 @@ bool EE895::begin(TwoWire &twoWirePort) {
   port->setClockStretchLimit(200000);
   #endif
 
-  return strcmp(getSensorName(), EE895_DEVICE_NAME) == 0;
+  char* sensorName = getSensorName();
+  bool value = (strcmp(sensorName , EE895_DEVICE_NAME) == 0);
+  delete sensorName;
+
+  return value;
 }
 
 void EE895::setDebug(Stream &debugStream) {
@@ -148,17 +152,25 @@ float EE895::readRegisterFloat(uint16_t address) {
   value.b[3] = registerContents[2];
   value.b[2] = registerContents[3];
 
+  delete registerContents;
+
   return value.f;
 }
 
 uint16_t EE895::readRegisterUInt(uint16_t address) {
   uint8_t *reg = readRegister(address, 1);
-  return (reg[0] << 8) | reg[1];
+  const uint16_t value =  (reg[0] << 8) | reg[1];
+  delete reg;
+
+  return value;
 }
 
 int16_t EE895::readRegisterInt(uint16_t address) {
   uint8_t *reg = readRegister(address, 1);
-  return (reg[0] << 8) | reg[1];
+  const int16_t value =  (reg[0] << 8) | reg[1];
+  delete reg;
+
+  return value;
 }
 
 char* EE895::getSerialNumber() {
@@ -170,23 +182,43 @@ char* EE895::getSensorName() {
 }
 
 uint8_t EE895::getFirmwareVersionMajor() {
-  return readRegister(EE895_REGISTER_FIRMWARE_VERSION, 1)[0];
+  uint8_t *reg = readRegister(EE895_REGISTER_FIRMWARE_VERSION, 1);
+  const uint8_t value = reg[0];
+  delete reg;
+
+  return value;
 }
 
 uint8_t EE895::getFirmwareVersionMinor() {
-  return readRegister(EE895_REGISTER_FIRMWARE_VERSION, 1)[1];
+  uint8_t *reg = readRegister(EE895_REGISTER_FIRMWARE_VERSION, 1);
+  const uint8_t value = reg[1];
+  delete reg;
+
+  return value;
 }
 
 uint8_t EE895::getMeasuringMode() {
-  return readRegister(EE895_REGISTER_MEASURING_MODE, 1)[1] & 1;
+  uint8_t *reg = readRegister(EE895_REGISTER_MEASURING_MODE, 1);
+  const uint8_t value = reg[1]  & 1;
+  delete reg;
+
+  return value;
 }
 
 bool EE895::isDataReady() {
-  return readRegister(EE895_REGISTER_MEASURING_STATUS, 1)[1] & (1 << 0);
+  uint8_t *reg = readRegister(EE895_REGISTER_MEASURING_STATUS, 1);
+  const bool value = reg[1] & (1 << 0);
+  delete reg;
+
+  return value;
 }
 
 bool EE895::isReadyForTrigger() {
-  return readRegister(EE895_REGISTER_MEASURING_STATUS, 1)[1] & (1 << 1);
+  uint8_t *reg = readRegister(EE895_REGISTER_MEASURING_STATUS, 1);
+  const bool value = reg[1] & (1 << 1);
+  delete reg;
+
+  return value;
 }
 
 uint16_t EE895::getDetailedStatus() {
