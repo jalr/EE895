@@ -10,7 +10,7 @@ bool EE895::begin(TwoWire &twoWirePort) {
   #endif
 
   char* sensorName = getSensorName();
-  bool value = (strcmp(sensorName , EE895_DEVICE_NAME) == 0);
+  bool value = (strcmp(sensorName, EE895_DEVICE_NAME) == 0);
   delete sensorName;
 
   return value;
@@ -159,7 +159,7 @@ float EE895::readRegisterFloat(uint16_t address) {
 
 uint16_t EE895::readRegisterUInt(uint16_t address) {
   uint8_t *reg = readRegister(address, 1);
-  const uint16_t value =  (reg[0] << 8) | reg[1];
+  const uint16_t value = (reg[0] << 8) | reg[1];
   delete reg;
 
   return value;
@@ -167,7 +167,7 @@ uint16_t EE895::readRegisterUInt(uint16_t address) {
 
 int16_t EE895::readRegisterInt(uint16_t address) {
   uint8_t *reg = readRegister(address, 1);
-  const int16_t value =  (reg[0] << 8) | reg[1];
+  const int16_t value = (reg[0] << 8) | reg[1];
   delete reg;
 
   return value;
